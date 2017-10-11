@@ -103,24 +103,6 @@
       "kind": "ImageStream",
       "apiVersion": "v1",
       "metadata": {
-        "name": "s2i-java"
-      },
-      "spec": {
-        "tags": [
-          {
-            "name": "latest",
-            "from": {
-              "kind": "DockerImage",
-              "name": "jorgemoralespou/s2i-java"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "kind": "ImageStream",
-      "apiVersion": "v1",
-      "metadata": {
         "name": "${APPLICATION_NAME}"
       },
       "spec": {
@@ -173,8 +155,8 @@
           "type": "Source",
           "sourceStrategy": {
             "from": {
-              "kind": "ImageStreamTag",
-              "name": "s2i-java:latest"
+              "kind": "DockerImage",
+              "name": "redhat-openjdk-18/openjdk18-openshift:latest"
             },
             "env": [
               {
