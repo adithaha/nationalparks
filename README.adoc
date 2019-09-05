@@ -10,7 +10,7 @@ Assuming you're using the project <roadshow>:
 ----
 oc new-project roadshow
 oc policy add-role-to-user view system:serviceaccount:roadshow:default
-oc create -f ./ose3/application-template.json
+oc create -f https://raw.githubusercontent.com/adithaha/nationalparks/master/ose3/application-template.json
 oc new-app nationalparks
 ----
 
