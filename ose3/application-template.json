@@ -30,7 +30,7 @@
       "description": "Postgre host",
       "displayName": "Postgre Host",
       "name": "POSTGRE_HOST",
-      "value": "192.168.199.100",
+      "value": "postgresql",
       "required": true
     },
     {
