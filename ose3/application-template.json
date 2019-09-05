@@ -44,21 +44,21 @@
       "description": "Postgre DB name",
       "displayName": "Postgre DB Name",
       "name": "POSTGRE_DB_NAME",
-      "value": "parksmap",
+      "value": "postgres",
       "required": true
     },
     {
       "description": "Postgre username",
       "displayName": "Postgre Username",
       "name": "POSTGRE_USERNAME",
-      "value": "parksmap",
+      "value": "postgres",
       "required": true
     },
     {
       "description": "Postgre password",
       "displayName": "Postgre Password",
       "name": "POSTGRE_PASSWORD",
-      "value": "",
+      "value": "postgres",
       "required": true
     },
     {
