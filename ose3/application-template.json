@@ -155,8 +155,9 @@
           "type": "Source",
           "sourceStrategy": {
             "from": {
-              "kind": "DockerImage",
-              "name": "redhat-openjdk-18/openjdk18-openshift:latest"
+              "kind": "ImageStreamTag",
+              "name": "java:8",
+              "namespace": "openshift"
             },
             "env": [
               {
