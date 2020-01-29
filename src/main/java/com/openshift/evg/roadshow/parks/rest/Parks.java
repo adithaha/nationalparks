@@ -1,7 +1,6 @@
 package com.openshift.evg.roadshow.parks.rest;
 
 import com.mongodb.BasicDBObject;
-import com.openshift.evg.roadshow.parks.db.MongoDBConnection;
 import com.openshift.evg.roadshow.parks.db.postgre.PostgreDBConnection;
 import com.openshift.evg.roadshow.parks.model.Park;
 import org.bson.Document;

@@ -48,14 +48,15 @@ public class PostgreDBConnection {
 
     @PostConstruct
     public void initConnection() {
-        
+    	this.createParksTable();
+    	this.loadParks();
     }
 
     /*
      * Load from embedded list of parks using FILENAME
      */
     public void loadParks() {
-        System.out.println("[DEBUG] MongoDBConnection.loadParks()");
+        System.out.println("[DEBUG] PostgreDBConnection.loadParks()");
 
         try {
         	
@@ -68,7 +69,7 @@ public class PostgreDBConnection {
     }
 
     public void loadParks(String fileLocation) {
-        System.out.println("[DEBUG] MongoDBConnection.loadParks(" + fileLocation + ")");
+        System.out.println("[DEBUG] PostgreDBConnection.loadParks(" + fileLocation + ")");
 
         try {
             loadParks(new FileInputStream(new File(fileLocation)));
@@ -79,7 +80,7 @@ public class PostgreDBConnection {
     }
 
     public void loadParks(InputStream is) {
-        System.out.println("[DEBUG] MongoDBConnection.loadParks(InputStream)");
+        System.out.println("[DEBUG] PostgreDBConnection.loadParks(InputStream)");
 
         List<Document> docs = new ArrayList<Document>();
         BufferedReader in = new BufferedReader(new InputStreamReader(is));
@@ -120,7 +121,7 @@ public class PostgreDBConnection {
     }
     
     public void createParksTable() {
-        System.out.println("[DEBUG] MongoDBConnection.createParksTable()");
+        System.out.println("[DEBUG] PostgreDBConnection.createParksTable()");
 
         try {
         	String sql = "drop table if exists park";
@@ -152,7 +153,7 @@ public class PostgreDBConnection {
      *
      */
     public void clear() {
-        System.out.println("[DEBUG] MongoDBConnection.clear()");
+        System.out.println("[DEBUG] PostgreDBConnection.clear()");
         jdbcTemplate.update("truncate table park");
     	
         
@@ -163,7 +164,7 @@ public class PostgreDBConnection {
      * @param parks
      */
     public void init(List<Document> parks) {
-        System.out.println("[DEBUG] MongoDBConnection.init(...)");
+        System.out.println("[DEBUG] PostgreDBConnection.init(...)");
         
     }
 
@@ -200,12 +201,12 @@ public class PostgreDBConnection {
      * @return
      */
     public List<Park> getAll() {
-        System.out.println("[DEBUG] MongoDBConnection.getAll()");
+        System.out.println("[DEBUG] PostgreDBConnection.getAll()");
         return jdbcTemplate.query("select * from park", new ParkRowMapper());
     }
 
     public List<Park> getWithin(float lat1, float lon1, float lat2, float lon2) {
-        System.out.println("[DEBUG] MongoDBConnection.getAll()");
+        System.out.println("[DEBUG] PostgreDBConnection.getAll()");
         ArrayList<Park> allParksList = new ArrayList<Park>();
         return allParksList;
     }
@@ -215,7 +216,7 @@ public class PostgreDBConnection {
      * @return
      */
     public List<Park> getByQuery(BasicDBObject query) {
-        System.out.println("[DEBUG] MongoDBConnection.getByQuery()");
+        System.out.println("[DEBUG] PostgreDBConnection.getByQuery()");
         List<Park> parks = new ArrayList<Park>();
         return parks;
     }
