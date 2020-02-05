@@ -1,20 +1,12 @@
 package com.openshift.evg.roadshow.parks.model;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document
 public class Park {
 
-    @Id
     private Integer id;
 
     private Object toponymName;
     private Object name;
 
-    @Indexed
     private Coordinates position;
 
     private Object longitude;

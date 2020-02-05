@@ -2,6 +2,8 @@ package com.openshift.evg.roadshow.rest.gateway.model;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * TODO: Remove???
  * <p>

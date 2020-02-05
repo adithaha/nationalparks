@@ -1,5 +1,7 @@
 package com.openshift.evg.roadshow.rest.gateway.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * This represents a backend. Once a backend is registered, a call to the
  * backend to get this information about it will be issued.

@@ -1,23 +1,11 @@
-package com.openshift.evg.roadshow.parks.db.postgre;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
-import com.openshift.evg.roadshow.parks.model.Park;
-import com.openshift.evg.roadshow.parks.model.rowmapper.ParkRowMapper;
+package com.openshift.evg.roadshow.parks;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JacksonJsonParser;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.ArrayList;
@@ -37,9 +25,6 @@ public class PostgreDBConnection {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    @Autowired
-    private Environment env;
-    
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -149,75 +134,4 @@ public class PostgreDBConnection {
     }
 
 
-    /**
-     *
-     */
-    public void clear() {
-        System.out.println("[DEBUG] PostgreDBConnection.clear()");
-        jdbcTemplate.update("truncate table park");
-    	
-        
-    }
-
-
-    /**
-     * @param parks
-     */
-    public void init(List<Document> parks) {
-        System.out.println("[DEBUG] PostgreDBConnection.init(...)");
-        
-    }
-
-    /**
-     * @return
-     */
-    public long sizeInDB() {
-        int size = this.jdbcTemplate.queryForObject("select count(*) from park", Integer.class);
-        
-        return size;
-    }
-    
-    /**
-     * @param parks
-     */
-    public List<Park> findParksWithin(float lat1, float lon1, float lat2, float lon2) {
-    	
-    	Object[] obj = {lat1, lat2, lon1, lon2 };
-      	return jdbcTemplate.query("select * from park where latitude between ? and ? and longitude ? and ?", obj, new ParkRowMapper());
-
-    }
-
-    
-
-    /**
-     * @param parks
-     */
-    public void insert(List<Document> parks) {
-        
-
-    }
-
-    /**
-     * @return
-     */
-    public List<Park> getAll() {
-        System.out.println("[DEBUG] PostgreDBConnection.getAll()");
-        return jdbcTemplate.query("select * from park", new ParkRowMapper());
-    }
-
-    public List<Park> getWithin(float lat1, float lon1, float lat2, float lon2) {
-        System.out.println("[DEBUG] PostgreDBConnection.getAll()");
-        ArrayList<Park> allParksList = new ArrayList<Park>();
-        return allParksList;
-    }
-
-    /**
-     * @param query
-     * @return
-     */
-    public List<Park> getByQuery(BasicDBObject query) {
-        System.out.println("[DEBUG] PostgreDBConnection.getByQuery()");
-        List<Park> parks = new ArrayList<Park>();
-        return parks;
-    }
 }

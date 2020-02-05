@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <restConfiguration apiContextPath="api-docs" bindingMode="json"
+            component="servlet" contextPath="/ws" enableCORS="true">
+            <dataFormatProperty key="prettyPrint" value="true"/>
+            <apiProperty key="cors" value="true"/>
+            <apiProperty key="api.version" value="1.0.0"/>
+            <apiProperty key="api.title" value="Red Hat Fuse - REST"/>
+            <apiProperty key="api.description" value="Red Hat Fuse - REST"/>
+            <apiProperty key="api.contact.name" value="Red Hat"/>
+        </restConfiguration>
+        <rest id="_rest1" path="/healthz">
+            <get id="_get1" outType="java.lang.String"
+                produces="text/html" uri="/">
+                <to uri="direct:healthz-get"/>
+            </get>
+        </rest>
+        <rest id="_rest2" path="/info">
+            <get id="_get2"
+                outType="com.openshift.evg.roadshow.rest.gateway.model.Backend" uri="/">
+                <to uri="direct:info-get"/>
+            </get>
+        </rest>
+        <rest id="_rest3" path="/data">
+            <get id="_get3" outType="java.lang.String" uri="/load">
+                <to uri="direct:data-load"/>
+            </get>
+            <get id="_get4" outType="java.util.List" uri="/all">
+                <to uri="direct:data-all"/>
+            </get>
+            <get id="_get5" outType="java.util.List" uri="/within">
+                <param dataType="java.lang.Float" name="lat1" type="query"/>
+                <param dataType="java.lang.Float" name="lon1" type="query"/>
+                <param dataType="java.lang.Float" name="lat2" type="query"/>
+                <param dataType="java.lang.Float" name="lon2" type="query"/>
+                <to uri="direct:data-within"/>
+            </get>
+        </rest>
+        <route id="healthz-get">
+            <from id="_from1" uri="direct:healthz-get"/>
+            <setBody id="_setBody1">
+                <constant>OK</constant>
+            </setBody>
+        </route>
+        <route id="info-get">
+            <from id="_from2" uri="direct:info-get"/>
+            <setBody id="_setBody2">
+                <method method="infoBackend" ref="processor"/>
+            </setBody>
+        </route>
+        <route id="data-all">
+            <from id="_from3" uri="direct:data-all"/>
+            <to id="_to1" uri="sql:select * from park?dataSource=dsParksmap&amp;outputType=StreamList"/>
+            <split id="_split1" strategyRef="listStrategy" streaming="true">
+                <simple>${body}</simple>
+                <bean id="_bean1" method="parkMapper" ref="processor"/>
+            </split>
+        </route>
+        <route id="data-within">
+            <from id="_from4" uri="direct:data-within"/>
+            <to uri="sql:select * from park where latitude between :#${header.lat1} and :#${header.lat2} and longitude :#${header.lon1} and :#${header.lon2}?dataSource=dsParksmap&amp;outputType=StreamList"/>
+            <split id="_split2" strategyRef="listStrategy" streaming="true">
+                <simple>${body}</simple>
+                <bean id="_bean2" method="parkMapper" ref="processor"/>
+            </split>
+        </route>
+    </camelContext>
+</beans>
